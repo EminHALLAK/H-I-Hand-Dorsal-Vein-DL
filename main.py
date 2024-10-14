@@ -10,6 +10,7 @@ def print_hi(name):
     print("Hello World")
     for i in range(10):
         print(i)
+    print("Hello Emin")
 
 
 # Press the green button in the gutter to run the script.
