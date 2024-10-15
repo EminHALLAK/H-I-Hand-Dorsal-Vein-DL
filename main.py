@@ -11,6 +11,7 @@ def print_hi(name):
     for i in range(10):
         print(i)
     print("Hello Emin")
+    print("Vs Code is the best")
 
 
 # Press the green button in the gutter to run the script.
