@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import cv2
 
 # Load the uploaded image
-R_hand_image_path = 'C:\\Users\\90538\\Downloads\\Dorsal Hand Dataset\\user 14_R_1.png'
-L_hand_image_path = 'C:\\Users\\90538\\Downloads\\Dorsal Hand Dataset\\user 14_L_1.png'
+R_hand_image_path1 = 'Ignored_Data\\Dorsal Hand Dataset\\user 14_R_1.png'
+L_hand_image_path1 = 'Ignored_Data\\Dorsal Hand Dataset\\user 14_L_1.png'
 
 def Process_Image(image_path):
     # Görüntüyü açın
@@ -26,7 +26,7 @@ def Process_Image(image_path):
     edges_enhanced = cv2.Canny(image_morph, 50, 150)
 
     # Sonuçları gösterme
-    plt.figure(figsize=(10, 5))
+    plt.figure(figsize=(14, 7))
 
     # Orijinal gri tonlamalı görüntü
     plt.subplot(1, 3, 1)
@@ -91,5 +91,5 @@ def Process_Image2(image):
     plt.show()
 
 
-Process_Image(R_hand_image_path)
-Process_Image2(R_hand_image_path)
+Process_Image(R_hand_image_path1)
+Process_Image2(R_hand_image_path1)
