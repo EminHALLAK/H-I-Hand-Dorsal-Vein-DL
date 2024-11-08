@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 NUM_CLASSES = 60  # Replace with your actual number of classes
 
 # Preprocessing function
-def prepare_data(dataset_dir, img_size=(256, 256), batch_size =2, validation_split=0.2):
+def prepare_data(dataset_dir, img_size=(256, 256), batch_size =16, validation_split=0.2):
     """
     Prepares the data generators for training and validation.
 
@@ -136,7 +136,7 @@ def main():
     # Prepare data
     dataset_dir = "Dataset"  # Replace with your dataset directory
     img_size = (256, 256)
-    batch_size =2
+    batch_size =16
 
     train_data, val_data = prepare_data(
         dataset_dir, img_size=img_size, batch_size=batch_size, validation_split=0.2

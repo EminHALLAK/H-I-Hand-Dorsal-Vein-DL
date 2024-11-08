@@ -113,13 +113,13 @@ def main():
     # Train U-Net classification model
     print("Training U-Net for classification...")
     history_unet = unet.fit(
-        train_data, epochs=10, validation_data=val_data
+        train_data, epochs=100, validation_data=val_data
     )
 
     # Train ResNet on the same data
     print("Training ResNet for classification...")
     history_resnet = resnet.fit(
-        train_data, epochs=10, validation_data=val_data
+        train_data, epochs=100, validation_data=val_data
     )
 
     # Plot accuracy over epochs for U-Net
