@@ -147,7 +147,7 @@ def create_model(input_shape=(300, 300, 3), num_classes=NUM_CLASSES):
 
   return model
 
-def train_model(model, train_generator, validation_generator, epochs=100):
+def train_model(model, train_generator, validation_generator, epochs=50):
   """
   Trains the model with the given data generators.
 
@@ -164,7 +164,7 @@ def train_model(model, train_generator, validation_generator, epochs=100):
   early_stopping = EarlyStopping(
       monitor='val_loss',
       patience=10,
-      restore_best_weights=True,
+      restore_best_weights= False,
   )
 
   reduce_lr = ReduceLROnPlateau(
@@ -219,7 +219,7 @@ def main():
   dataset_dir = 'Veins_Dataset'  # Replace with your dataset path
   img_size = (300, 300)    # EfficientNetB3 default size is 300x300
   batch_size = 12
-  epochs = 100
+  epochs = 50
 
   # Determine number of classes
   try:
