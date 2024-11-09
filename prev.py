@@ -94,20 +94,20 @@ def main():
     )
 
     train_data = data_gen.flow_from_directory(
-        "Dataset",
+        "Veins_Dataset",
         target_size=(256, 256),
         color_mode="grayscale",
         class_mode="categorical",
         subset="training",
-        batch_size=16,
+        batch_size=10,
     )
     val_data = data_gen.flow_from_directory(
-        "Dataset",
+        "Veins_Dataset",
         target_size=(256, 256),
         color_mode="grayscale",
         class_mode="categorical",
         subset="validation",
-        batch_size=16,
+        batch_size=10,
     )
 
     # Train U-Net classification model

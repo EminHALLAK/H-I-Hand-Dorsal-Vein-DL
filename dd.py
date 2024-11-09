@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 NUM_CLASSES = 60  # Replace with your actual number of classes
 
 # Preprocessing function
-def prepare_data(dataset_dir, img_size=(256, 256), batch_size =16, validation_split=0.2):
+def prepare_data(dataset_dir, img_size=(256, 256), batch_size =10, validation_split=0.2):
     """
     Prepares the data generators for training and validation.
 
@@ -134,9 +134,9 @@ def resnet_classification_model(input_shape=(256, 256, 3), num_classes=NUM_CLASS
 # Main function to run the training pipeline
 def main():
     # Prepare data
-    dataset_dir = "Dataset"  # Replace with your dataset directory
+    dataset_dir = "Veins_Dataset"  # Replace with your dataset directory
     img_size = (256, 256)
-    batch_size =16
+    batch_size =10
 
     train_data, val_data = prepare_data(
         dataset_dir, img_size=img_size, batch_size=batch_size, validation_split=0.2
@@ -170,7 +170,7 @@ def main():
     early_stopping = EarlyStopping(
         monitor='val_loss',
         patience=10,
-        restore_best_weights=True,
+        restore_best_weights=False,
     )
 
     checkpoint_unet = ModelCheckpoint(
