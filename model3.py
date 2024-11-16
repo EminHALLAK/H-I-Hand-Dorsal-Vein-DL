@@ -11,9 +11,10 @@ tf.random.set_seed(42)
 np.random.seed(42)
 random.seed(42)
 
-IMG_HEIGHT, IMG_WIDTH = 250, 250
-BATCH_SIZE = 16
-EPOCHS = 100
+IMG_HEIGHT, IMG_WIDTH = 250, 250  # Görüntü boyutları
+BATCH_SIZE = 16  # Parti boyutu
+EPOCHS = 100  # Eğitim döngüsü sayısı
+INITIAL_LEARNING_RATE = 0.001
 
 
 def load_images(data_dir):
@@ -142,25 +143,37 @@ model = Model([input_a, input_b], outputs)
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 
-def pair_generator(pairs, labels, batch_size, data_gen):
+def pair_generator(pairs, labels, batch_size, augment=False):
+    """Eğitim için çift partileri oluştur."""
     num_samples = len(pairs)
+    datagen = ImageDataGenerator(
+        rotation_range=20,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
+        shear_range=0.2,
+        zoom_range=0.2,
+        horizontal_flip=True,
+        fill_mode='nearest'
+    ) if augment else None
+
     while True:
+        # Verileri karıştır
         idx = np.random.permutation(num_samples)
         pairs_shuffled = pairs[idx]
         labels_shuffled = labels[idx]
 
+        # Parti parti ver
         for i in range(0, num_samples, batch_size):
             batch_pairs = pairs_shuffled[i:i + batch_size]
             batch_labels = labels_shuffled[i:i + batch_size]
-
             x1 = np.array([img[0] for img in batch_pairs])
             x2 = np.array([img[1] for img in batch_pairs])
 
-            # Apply data augmentation using the data generator
-            augmented_x1 = np.array([data_gen.random_transform(img) for img in x1])
-            augmented_x2 = np.array([data_gen.random_transform(img) for img in x2])
+            if augment:
+                x1 = next(datagen.flow(x1, batch_size=batch_size, shuffle=False))
+                x2 = next(datagen.flow(x2, batch_size=batch_size, shuffle=False))
 
-            yield [augmented_x1, augmented_x2], batch_labels
+            yield [x1, x2], batch_labels
 
 
 steps_per_epoch = len(train_pairs) // BATCH_SIZE
