@@ -142,7 +142,7 @@ model = Model([input_a, input_b], outputs)
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 
-def pair_generator(pairs, labels, batch_size):
+def pair_generator(pairs, labels, batch_size, data_gen):
     num_samples = len(pairs)
     while True:
         idx = np.random.permutation(num_samples)
@@ -152,22 +152,28 @@ def pair_generator(pairs, labels, batch_size):
         for i in range(0, num_samples, batch_size):
             batch_pairs = pairs_shuffled[i:i + batch_size]
             batch_labels = labels_shuffled[i:i + batch_size]
+
             x1 = np.array([img[0] for img in batch_pairs])
             x2 = np.array([img[1] for img in batch_pairs])
 
-            yield [x1, x2], batch_labels
+            # Apply data augmentation using the data generator
+            augmented_x1 = np.array([data_gen.random_transform(img) for img in x1])
+            augmented_x2 = np.array([data_gen.random_transform(img) for img in x2])
+
+            yield [augmented_x1, augmented_x2], batch_labels
 
 
 steps_per_epoch = len(train_pairs) // BATCH_SIZE
 validation_steps = len(val_pairs) // BATCH_SIZE
 
 history = model.fit(
-    pair_generator(train_pairs, train_pair_labels, BATCH_SIZE),
+    pair_generator(train_pairs, train_pair_labels, BATCH_SIZE, data_gen),
     steps_per_epoch=steps_per_epoch,
     epochs=EPOCHS,
-    validation_data=pair_generator(val_pairs, val_pair_labels, BATCH_SIZE),
+    validation_data=pair_generator(val_pairs, val_pair_labels, BATCH_SIZE, data_gen),
     validation_steps=validation_steps
 )
+
 
 loss, acc = model.evaluate(
     pair_generator(val_pairs, val_pair_labels, BATCH_SIZE),
