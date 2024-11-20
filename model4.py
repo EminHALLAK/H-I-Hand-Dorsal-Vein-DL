@@ -13,9 +13,9 @@ np.random.seed(42)
 random.seed(42)
 
 IMG_HEIGHT, IMG_WIDTH = 250, 250  # Görüntü boyutları
-BATCH_SIZE = 32  # Parti boyutu
+BATCH_SIZE = 32  # 32 olmazsa 16 sabit kalsin
 EPOCHS = 100  # Eğitim döngüsü sayısı
-INITIAL_LEARNING_RATE = 0.005
+INITIAL_LEARNING_RATE = 0.005  # 0.01 veya 0.001 de dene
 
 
 def load_images(data_dir):
