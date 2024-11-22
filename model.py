@@ -13,9 +13,9 @@ np.random.seed(42)
 random.seed(42)
 
 IMG_HEIGHT, IMG_WIDTH = 250, 250  # Görüntü boyutları
-BATCH_SIZE = 32  # 32 olmazsa 16 sabit kalsin
+BATCH_SIZE = 6  # Parti boyutu
 EPOCHS = 100  # Eğitim döngüsü sayısı
-INITIAL_LEARNING_RATE = 0.005  # 0.01 veya 0.001 de dene
+INITIAL_LEARNING_RATE = 0.001
 
 
 def load_images(data_dir):
@@ -77,19 +77,19 @@ def siamese_network(input_shape):
     x = layers.Conv2D(64, (3, 3), padding='same', activation='relu')(inputs)
     x = layers.BatchNormalization()(x)
     x = layers.MaxPooling2D(pool_size=(2, 2))(x)
-    x = layers.Dropout(0.2)(x)
+    x = layers.Dropout(0.3)(x)
 
     # İkinci konvolüsyon bloğu
     x = layers.Conv2D(128, (3, 3), padding='same', activation='relu')(x)
     x = layers.BatchNormalization()(x)
     x = layers.MaxPooling2D(pool_size=(2, 2))(x)
-    x = layers.Dropout(0.2)(x)
+    x = layers.Dropout(0.3)(x)
 
     # Üçüncü konvolüsyon bloğu
     x = layers.Conv2D(256, (3, 3), padding='same', activation='relu')(x)
     x = layers.BatchNormalization()(x)
     x = layers.MaxPooling2D(pool_size=(2, 2))(x)
-    x = layers.Dropout(0.2)(x)
+    x = layers.Dropout(0.3)(x)
 
     # Dördüncü konvolüsyon bloğu
     x = layers.Conv2D(512, (3, 3), padding='same', activation='relu')(x)
@@ -101,7 +101,7 @@ def siamese_network(input_shape):
     x = layers.Conv2D(512, (3, 3), padding='same', activation='relu')(x)
     x = layers.BatchNormalization()(x)
     x = layers.GlobalAveragePooling2D()(x)
-    x = layers.Dropout(0.2)(x)
+    x = layers.Dropout(0.3)(x)
 
     # Tam bağlantılı katman
     outputs = layers.Dense(256, activation='relu')(x)
@@ -195,6 +195,8 @@ checkpoint = tf.keras.callbacks.ModelCheckpoint(
     monitor='val_loss',
     save_best_only=True
 )
+
+# Optional: EarlyStopping callback
 
 
 # Modeli eğit
