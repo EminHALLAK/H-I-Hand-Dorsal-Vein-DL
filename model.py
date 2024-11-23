@@ -70,7 +70,7 @@ def create_pairs(images, labels):
     return np.array(pair_images), np.array(pair_labels)
 
 
-def siamese_network(input_shape):
+def deep_Model(input_shape):
     inputs = Input(shape=input_shape)
 
     # İlk konvolüsyon bloğu
@@ -159,7 +159,7 @@ val_pairs, val_pair_labels = create_pairs(val_images, val_labels)
 
 # Modeli oluştur
 input_shape = (IMG_HEIGHT, IMG_WIDTH, 3)
-base_model = siamese_network(input_shape)
+base_model = deep_Model(input_shape)
 
 # Siamese modeli oluştur
 input_a = Input(shape=input_shape)
